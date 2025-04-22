@@ -40,3 +40,16 @@ jobs:
           $rscript = "Rscript"
           $args = "-e", "print(R.version); install.packages('remotes', repos = 'https://cloud.r-project.org/'); remotes::install_github('remlapmot/pkgbuild@fix-win-11-arm'); print('check_build_tools()'); pkgbuild::check_build_tools(debug = TRUE); print('has_rtools()'); pkgbuild::has_rtools(debug = TRUE); print('rtools_path()'); pkgbuild::rtools_path()"
           & $rscript $args
+          
+          # Check that devtools::check() now runs ok
+          # Install TinyTeX (required for building vignettes)
+          $args = "-e", "install.packages(c('tinytex'), repos = 'https://cloud.r-project.org/'); tinytex::install_tinytex(); tinytex::tlmgr_install(c('makeindex', 'upquote', 'inconsolata'))"
+          & $rscript $args
+          
+          # Add TinyTeX binaries to PATH
+          $ENV:PATH = "C:\Users\runneradmin\AppData\Roaming\TinyTeX\bin\windows;$ENV:PATH"
+          
+          git clone https://github.com/remlapmot/bpbounds.git
+          cd bpbounds
+          $args = "-e", "install.packages('devtools', repos = 'https://cloud.r-project.org/'); devtools::install_dev_deps(repos = 'https://cloud.r-project.org/'); devtools::check()"
+          & $rscript $args
