@@ -38,5 +38,5 @@ jobs:
 
           # Install pkgbuild and run test
           $rscript = "Rscript"
-          $args = "-e", "print(R.version); install.packages('pkgbuild', repos = 'https://cloud.r-project.org/'); print("check_build_tools()"); pkgbuild::check_build_tools(debug = TRUE); print("has_rtools()"); pkgbuild::has_rtools(debug = TRUE); print("rtools_path()"); pkgbuild::rtools_path()"
+          $args = "-e", "print(R.version); install.packages('pkgbuild', repos = 'https://cloud.r-project.org/'); print('check_build_tools()'); pkgbuild::check_build_tools(debug = TRUE); print('has_rtools()'); pkgbuild::has_rtools(debug = TRUE); print("rtools_path()"); pkgbuild::rtools_path()"
           & $rscript $args
